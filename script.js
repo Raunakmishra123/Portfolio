@@ -549,8 +549,23 @@ document.addEventListener('DOMContentLoaded', () => {
           btnLoading.style.display = 'inline-block';
         }
 
-        // Mock ajax submission
-        setTimeout(() => {
+        // AJAX submission to FormSubmit API
+        fetch('https://formsubmit.co/ajax/raunakmishramth20@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: inputs.name.el.value,
+            email: inputs.email.el.value,
+            subject: inputs.subject.el.value,
+            message: inputs.message.el.value,
+            _subject: "New Portfolio Message from " + inputs.name.el.value
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
           contactForm.reset();
           
           if (formSuccess) {
@@ -573,13 +588,18 @@ document.addEventListener('DOMContentLoaded', () => {
               }, 400);
             }, 6000);
           }
-
+        })
+        .catch(error => {
+          console.error('Error submitting form:', error);
+          alert('Sorry, there was an issue sending your message. Please try again directly at raunakmishramth20@gmail.com.');
+        })
+        .finally(() => {
           if (formSubmitBtn && btnText && btnLoading) {
             formSubmitBtn.disabled = false;
             btnText.style.display = 'inline-block';
             btnLoading.style.display = 'none';
           }
-        }, 1500);
+        });
       }
     });
   }
@@ -600,17 +620,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const submitBtn = newsletterForm.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.disabled = true;
         
-        setTimeout(() => {
+        // AJAX submission to FormSubmit for updates
+        fetch('https://formsubmit.co/ajax/raunakmishramth20@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            email: emailVal,
+            _subject: "New Newsletter Subscription: " + emailVal
+          })
+        })
+        .then(() => {
           newsletterEmail.value = '';
-          if (submitBtn) submitBtn.disabled = false;
-          
           if (newsletterSuccess) {
             newsletterSuccess.style.display = 'block';
             setTimeout(() => {
               newsletterSuccess.style.display = 'none';
             }, 4000);
           }
-        }, 1000);
+        })
+        .catch(error => {
+          console.error('Error subscribing:', error);
+        })
+        .finally(() => {
+          if (submitBtn) submitBtn.disabled = false;
+        });
       } else {
         newsletterEmail.style.borderColor = 'var(--danger)';
       }
