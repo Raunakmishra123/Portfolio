@@ -561,7 +561,8 @@ document.addEventListener('DOMContentLoaded', () => {
             email: inputs.email.el.value,
             subject: inputs.subject.el.value,
             message: inputs.message.el.value,
-            _subject: "New Portfolio Message from " + inputs.name.el.value
+            _subject: "New Portfolio Message from " + inputs.name.el.value,
+            "Submitted At": new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }) + " (IST)"
           })
         })
         .then(response => response.json())
@@ -629,7 +630,8 @@ document.addEventListener('DOMContentLoaded', () => {
           },
           body: JSON.stringify({
             email: emailVal,
-            _subject: "New Newsletter Subscription: " + emailVal
+            _subject: "New Newsletter Subscription: " + emailVal,
+            "Submitted At": new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }) + " (IST)"
           })
         })
         .then(() => {
