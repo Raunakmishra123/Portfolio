@@ -198,12 +198,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================================ AOS INITIALIZATION
   if (typeof AOS !== 'undefined') {
     AOS.init({
-      duration: 800,
+      duration: 700,
       once: true,
-      offset: 50,
-      delay: 50,
-      easing: 'ease-out-cubic'
+      mirror: false,
+      offset: 0,
+      delay: 0,
+      easing: 'ease-out-cubic',
+      startEvent: 'DOMContentLoaded',
+      anchorPlacement: 'top-bottom'
     });
+    // Refresh AOS after a short delay to catch late-rendering elements
+    setTimeout(() => { AOS.refresh(); }, 500);
   }
 
   // ============================================================ SCROLL PROGRESS & STICKY NAVBAR
@@ -860,5 +865,13 @@ window.addEventListener('load', () => {
   const loader = document.getElementById('page-loader');
   if (loader) {
     loader.classList.add('hidden');
+  }
+  // Refresh AOS on full page load to ensure all project images animate correctly
+  if (typeof AOS !== 'undefined') {
+    AOS.refresh();
+    // Force-trigger all project cards that haven't animated yet
+    document.querySelectorAll('.project-card[data-aos]').forEach(el => {
+      el.classList.add('aos-animate');
+    });
   }
 });

@@ -2534,3 +2534,38 @@ input, textarea { font-family: inherit; }
     grid-template-columns: 1fr;
   }
 }
+
+/* ----------------------------------------------------------------
+   AOS FIX — Prevent project images from disappearing after animation
+   Forces all AOS-animated elements to stay visible once revealed
+---------------------------------------------------------------- */
+.project-card[data-aos].aos-animate {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+
+/* Ensure project images are always fully visible */
+.project-image img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Prevent AOS from hiding images inside animated containers */
+[data-aos] .project-image,
+[data-aos] .project-image img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* Ensure all project cards stay visible after animating */
+.projects-grid .project-card {
+  opacity: 1;
+  visibility: visible;
+}
+
+.projects-grid .project-card[data-aos]:not(.aos-animate) {
+  opacity: 0;
+}
